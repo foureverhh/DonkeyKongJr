@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour {
     {
         Debug.Log("Left and up is called");
         bool touchCeiling = UnderSecondFloor();
+        Debug.Log("touchCeiling is: "+touchCeiling);
         if (touchCeiling)
         {
             //Get Transform of SecondFloor
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour {
 
     bool UnderSecondFloor()
     {
+        Debug.Log("UnderSecondFloor is called");
         LayerMask touchCeiling = LayerMask.GetMask("Ceiling");
         RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.up,Mathf.Infinity,touchCeiling);
         if (hit.collider != null)
