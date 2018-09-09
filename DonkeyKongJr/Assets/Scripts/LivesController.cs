@@ -24,13 +24,13 @@ public class LivesController : MonoBehaviour {
         }
     }
 	
-    void LifeDamage()
+    public void LifeDamage()
     {
         lives--;
         transform.GetChild(lives).gameObject.SetActive(false);
     }
 
-    void RestoreLives()
+    public void RestoreLives()
     {
         foreach (Transform child in transform)
             child.gameObject.SetActive(true);
