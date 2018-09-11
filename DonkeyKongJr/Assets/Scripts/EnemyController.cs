@@ -13,9 +13,6 @@ public class EnemyController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //To get positions of Positions under Enemy
-        //devilPos = enemyPrefab.GetComponentsInChildren<Transform>()[2].GetComponentsInChildren<Transform>();
-        //Debug.Log(devilPos.childCount);
         StartCoroutine(DemonMove(moveIntervalControll));
 	}
 	
@@ -34,6 +31,7 @@ public class EnemyController : MonoBehaviour {
         currentPos++;
         if (currentPos > demonPos.childCount-1)
         {
+            Destroy(transform.parent.gameObject);
             currentPos = 0;
         }
         transform.position = demonPos.GetChild(currentPos).position;
@@ -42,12 +40,13 @@ public class EnemyController : MonoBehaviour {
     public void OnTriggerEnter2D(Collider2D playerCollider)
     {
         Debug.Log("OnTriggerEnter is called");
-        Debug.Log("demon collider is: " + transform.name + "Player collider is: " + playerCollider.name);
+        //Debug.Log("demon collider is: " + transform.name + "Player collider is: " + playerCollider.name);
         if (playerCollider.tag == "Player")
         {
-            Destroy(transform.gameObject);
+            Debug.Log("demon collider is: " + transform.name + "Player collider is: " + playerCollider.name);
+            Destroy(transform.parent.gameObject);
             gameManager.livesController.LifeDamage();
-            gameManager.GameOver();  
+            gameManager.GameOver();
         }
     }
 }

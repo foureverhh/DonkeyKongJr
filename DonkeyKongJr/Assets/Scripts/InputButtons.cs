@@ -12,9 +12,11 @@ public class InputButtons : MonoBehaviour {
     public static event ButtonPressed RightButtonPressed;
     public static event ButtonPressed UpButtonPressed;
 
-    private void Update()
+    private void Start()
     {
-        
+#if UNITY_ANDROID
+        transform.gameObject.SetActive(false);
+#endif
     }
 
     private void OnMouseDown()

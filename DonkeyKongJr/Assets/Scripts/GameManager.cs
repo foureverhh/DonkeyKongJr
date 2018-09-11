@@ -8,9 +8,10 @@ public class GameManager : MonoBehaviour {
     public GameObject enemy;
     public GameObject player;
     public LivesController livesController;
+    public KeyController keyController;
+    public DonkeyKongBigController donkeyKongBigController;
 
-
-    public float spawnInterval = 4f;
+    public float spawnInterval = 2f;
     public float moveInterval = 0.5f;
 
     private bool gameContinue = true;
@@ -18,12 +19,10 @@ public class GameManager : MonoBehaviour {
 
     void Start () {
         StartCoroutine(SpawnNewDemon());
-	}
-	
-	// Update is called once per frame
-	void Update () {
-       // GameOver();
-	}
+        keyController.gameManager = this;
+        donkeyKongBigController.gameManager = this;
+
+    }
     
     //Spwan new demon with interval of spwan interval
     IEnumerator SpawnNewDemon()
@@ -43,7 +42,6 @@ public class GameManager : MonoBehaviour {
         enemyController.moveIntervalControll = moveInterval;
         //To make OnTriggerEnter2D work, assign a gameManager to new created demon 
         enemyController.gameManager = this;
-        GameOver();
     }
 
     public void GameOver()
