@@ -18,10 +18,20 @@ public class InputButtons : MonoBehaviour {
         transform.gameObject.SetActive(false);
 #endif
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && LeftButtonPressed != null)
+            LeftButtonPressed();
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && RightButtonPressed != null)
+            RightButtonPressed();
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) && UpButtonPressed != null)
+            UpButtonPressed();
+    }
 
     private void OnMouseDown()
     {
-        if (LeftButtonPressed != null && left && UpButtonPressed != null && up)
+        if (UpButtonPressed != null && up)
             UpButtonPressed();
         else if (LeftButtonPressed != null && left)
             LeftButtonPressed();

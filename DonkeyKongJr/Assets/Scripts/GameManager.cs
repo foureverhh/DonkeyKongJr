@@ -73,11 +73,8 @@ public class GameManager : MonoBehaviour {
         //Debug.Log(enemy.transform.GetChild(0).transform.position);
         if(hit.rigidbody != null)
         {
-            Debug.Log("it runs here");
-            Debug.Log("Reveiver is: " + hit.collider.name);
             currentScore += 10;
         }
-        Debug.Log("it runs here");
         score.text = currentScore.ToString();
     }
 }
