@@ -35,15 +35,16 @@ public class EnemyController : MonoBehaviour {
             currentPos = 0;
         }
         transform.position = demonPos.GetChild(currentPos).position;
+        gameManager.CheckScore(transform);
     }
 
     public void OnTriggerEnter2D(Collider2D playerCollider)
     {
-        Debug.Log("OnTriggerEnter is called");
+        //Debug.Log("OnTriggerEnter is called");
         //Debug.Log("demon collider is: " + transform.name + "Player collider is: " + playerCollider.name);
         if (playerCollider.tag == "Player")
         {
-            Debug.Log("demon collider is: " + transform.name + "Player collider is: " + playerCollider.name);
+           // Debug.Log("demon collider is: " + transform.name + "Player collider is: " + playerCollider.name);
             Destroy(transform.parent.gameObject);
             gameManager.livesController.LifeDamage();
             gameManager.GameOver();

@@ -6,10 +6,18 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public GameObject gameZone;
-    public float horizontalMoveAmount = 1.5f;
-    public float veriticalMoveAmont = 1.5f;
+    public float horizontalMoveAmount;
+    public float veriticalMoveAmont;
+    public float stayInAir;
 
     public bool withKey;
+    private bool addPush;
+    private Rigidbody2D rd;
+
+    private void Start()
+    {
+        rd = GetComponent<Rigidbody2D>();
+    }
 
     private void OnEnable()
     {
@@ -29,7 +37,7 @@ public class PlayerController : MonoBehaviour {
     private void Move_ToRight()
     {
         //Debug.Log("Right is called");
-        if (transform.position.x <5)
+        if (transform.position.x < 5.2)
         {
             Vector3 pos = transform.position;
             pos.x = pos.x + horizontalMoveAmount;
@@ -37,12 +45,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-
-
     private void Move_ToLeft()
     {
         //Debug.Log("Left is called");
-        if (transform.position.x > -5)
+        if (transform.position.x > -5.2)
         {
             Vector3 pos = transform.position;
             pos.x = pos.x - horizontalMoveAmount;
@@ -52,6 +58,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Move_ToUp()
     {
+
         //Debug.Log("Left and up is called");
         bool touchCeiling = UnderCeiling();
         //Debug.Log("touchCeiling is: "+touchCeiling);
@@ -59,37 +66,54 @@ public class PlayerController : MonoBehaviour {
         {
             //Get Transform of SecondFloor
             Transform secondFloor = gameZone.GetComponentsInChildren<Transform>()[2];
-           // Debug.Log("SecondFloor is: "+secondFloor.gameObject.name);
-           // Debug.Log("player Y is: " + transform.position.y);
-           // Debug.Log("second floor Y is: " + secondFloor.position.y);
+            //Debug.Log("Floor is: " + secondFloor.gameObject.name);
+            // Debug.Log("player Y is: " + transform.position.y);
+            // Debug.Log("second floor Y is: " + secondFloor.position.y);
             float offsetY = secondFloor.position.y - transform.position.y;
 
-           // Debug.Log("offsetY is: " + offsetY);
-      
+            //Debug.Log("offsetY is: " + offsetY);
+
             Vector3 pos = transform.position;
-            pos.y = pos.y + offsetY-0.6f;
-           // Debug.Log("pos.y is:" + pos.y);
+            pos.y = pos.y + offsetY - 1.5f;  // 
+            // Debug.Log("pos.y is:" + pos.y);
             transform.position = pos;
-           // Debug.Log("player after jump Y is: " + transform.position.y);
+            // Debug.Log("player after jump Y is: " + transform.position.y);
+            addPush = true;
         }
-        else if (transform.position.y <-0.3)
+        else if (transform.position.y < -0.3)
         {
             Vector3 pos = transform.position;
             pos.y = pos.y + veriticalMoveAmont;
             transform.position = pos;
+            addPush = true;
+
         }
     }
 
     bool UnderCeiling()
     {
        // Debug.Log("UnderSecondFloor is called");
-        LayerMask touchCeiling = LayerMask.GetMask("Ceiling");
-        RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.up,Mathf.Infinity,touchCeiling);
+        LayerMask ceiling = LayerMask.GetMask("Ceiling");
+        RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.up,Mathf.Infinity,ceiling);
         if (hit.collider != null)
             return true;
         else
             return false;
     }
 
+    private void FixedUpdate()
+    {
+        if(addPush)
+        {
+            StartCoroutine(DownSlowly());
+        }
+    }
+
+    IEnumerator DownSlowly()
+    {
+        rd.AddForce(transform.up * 180f);
+        yield return new WaitForSeconds(stayInAir);
+        addPush = false;
+    }
 
 }

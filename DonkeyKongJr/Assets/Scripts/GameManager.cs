@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -14,6 +15,11 @@ public class GameManager : MonoBehaviour {
     public float spawnInterval = 2f;
     public float moveInterval = 0.5f;
 
+    public Text score;
+    public Text gameResult;
+    private int currentScore;
+
+
     private bool gameContinue = true;
     // Use this for initialization
 
@@ -21,13 +27,15 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(SpawnNewDemon());
         keyController.gameManager = this;
         donkeyKongBigController.gameManager = this;
+        score.text = "";
+        gameResult.text = " ";
+        currentScore = 0;
 
     }
     
     //Spwan new demon with interval of spwan interval
     IEnumerator SpawnNewDemon()
     {
-        Debug.Log("Game continue in SpwanNewDemom is "+gameContinue);
         while (gameContinue)
         {
             NewDemon(moveInterval);
@@ -42,6 +50,7 @@ public class GameManager : MonoBehaviour {
         enemyController.moveIntervalControll = moveInterval;
         //To make OnTriggerEnter2D work, assign a gameManager to new created demon 
         enemyController.gameManager = this;
+        //To check score each move
     }
 
     public void GameOver()
@@ -50,8 +59,25 @@ public class GameManager : MonoBehaviour {
         {
             gameContinue = false;
             Destroy(player);
+            gameResult.text = "Game Over!";
         }
-         Debug.Log("Gamecontinue is: " + gameContinue);
     }
     
+    //public void CheckScore()
+    public void CheckScore(Transform transform)
+    {
+        LayerMask playerLayer = LayerMask.GetMask("DK");
+        //RaycastHit2D hit = Physics2D.Raycast(enemy.transform.GetChild(0).transform.position, Vector2.up,Mathf.Infinity,playerLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 3f, playerLayer);
+        //Debug.Log("Sender is: " + enemy.transform.GetChild(0).name); The place is fixed
+        //Debug.Log(enemy.transform.GetChild(0).transform.position);
+        if(hit.rigidbody != null)
+        {
+            Debug.Log("it runs here");
+            Debug.Log("Reveiver is: " + hit.collider.name);
+            currentScore += 10;
+        }
+        Debug.Log("it runs here");
+        score.text = currentScore.ToString();
+    }
 }

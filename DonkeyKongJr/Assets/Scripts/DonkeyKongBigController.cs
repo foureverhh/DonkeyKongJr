@@ -11,8 +11,15 @@ public class DonkeyKongBigController : MonoBehaviour {
     {
         if(collision.tag == "Player")
         {
-            if(gameManager.player.GetComponentInChildren<PlayerController>().withKey)
+            if (gameManager.player.GetComponentInChildren<PlayerController>().withKey)
+            {
                 transform.GetComponent<SpriteRenderer>().color = Color.green;
+                //To shut down KeyView in key
+                gameManager.keyController.gameObject.transform.parent.GetChild(1).transform.gameObject.SetActive(false);
+                gameManager.gameResult.text = "You win";
+                Destroy(gameManager.player);
+                Destroy(gameManager.enemy);
+            }     
         }
     }
 }
