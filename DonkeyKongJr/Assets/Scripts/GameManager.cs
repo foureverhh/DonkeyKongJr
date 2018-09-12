@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour {
     public Text gameResult;
     private int currentScore;
 
-
-    private bool gameContinue = true;
+    [HideInInspector]
+    public bool gameContinue = true;
     // Use this for initialization
 
     void Start () {
@@ -67,10 +67,7 @@ public class GameManager : MonoBehaviour {
     public void CheckScore(Transform transform)
     {
         LayerMask playerLayer = LayerMask.GetMask("DK");
-        //RaycastHit2D hit = Physics2D.Raycast(enemy.transform.GetChild(0).transform.position, Vector2.up,Mathf.Infinity,playerLayer);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 3f, playerLayer);
-        //Debug.Log("Sender is: " + enemy.transform.GetChild(0).name); The place is fixed
-        //Debug.Log(enemy.transform.GetChild(0).transform.position);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 2.5f, playerLayer);
         if(hit.rigidbody != null)
         {
             currentScore += 10;

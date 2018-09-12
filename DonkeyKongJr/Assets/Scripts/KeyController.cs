@@ -9,7 +9,6 @@ public class KeyController : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("OnTriggerEnter is called");
         if (collision.tag == "Player")
         {
             //Make key picture disappear

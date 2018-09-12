@@ -17,8 +17,8 @@ public class DonkeyKongBigController : MonoBehaviour {
                 //To shut down KeyView in key
                 gameManager.keyController.gameObject.transform.parent.GetChild(1).transform.gameObject.SetActive(false);
                 gameManager.gameResult.text = "You win";
-                Destroy(gameManager.player);
-                Destroy(gameManager.enemy);
+                gameManager.gameContinue = false;
+                //Destroy(gameManager.player);
             }     
         }
     }

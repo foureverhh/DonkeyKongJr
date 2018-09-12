@@ -38,16 +38,29 @@ public class EnemyController : MonoBehaviour {
         gameManager.CheckScore(transform);
     }
 
-    public void OnTriggerEnter2D(Collider2D playerCollider)
+    public void OnTriggerEnter2D(Collider2D Collider)
     {
         //Debug.Log("OnTriggerEnter is called");
         //Debug.Log("demon collider is: " + transform.name + "Player collider is: " + playerCollider.name);
-        if (playerCollider.tag == "Player")
+        if (Collider.tag == "Player")
         {
-           // Debug.Log("demon collider is: " + transform.name + "Player collider is: " + playerCollider.name);
+      
+            //Debug.Log("demon collider is: " + transform.name + "Player collider is: " + Collider.name);
             Destroy(transform.parent.gameObject);
             gameManager.livesController.LifeDamage();
+            //Debug.Log("It is called");
             gameManager.GameOver();
+           //Debug.Log("After all functions, demon collider is: " + transform.name + "Player collider is: " + Collider.name);
         }
+        /*
+        else
+        {
+            
+            Debug.Log("Transform name is: " + transform.gameObject.name);
+            Debug.Log("Transform position is: " + transform.position);
+            Debug.Log("It runs here");
+        }
+            
+        */
     }
 }

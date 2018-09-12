@@ -11,8 +11,12 @@ public class PlayerController : MonoBehaviour {
     public float stayInAir;
 
     public bool withKey;
-    private bool addPush;
+    private bool addPush ;
+    private bool startLinear;
     private Rigidbody2D rd;
+
+    private Vector3 startPos;
+    private Vector3 endPos;
 
     private void Start()
     {
@@ -80,13 +84,10 @@ public class PlayerController : MonoBehaviour {
             // Debug.Log("player after jump Y is: " + transform.position.y);
             addPush = true;
         }
-        else if (transform.position.y < -0.3)
+        else if (transform.position.y < -1.3)
         {
-            Vector3 pos = transform.position;
-            pos.y = pos.y + veriticalMoveAmont;
-            transform.position = pos;
-            addPush = true;
-
+            startLinear = true;
+            Debug.Log("After click, StartLinear: " + startLinear + "addPush: " + addPush);
         }
     }
 
@@ -103,12 +104,23 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if(addPush)
+         if (startLinear)
+        {
+            StartCoroutine(RaiseUp());
+        }
+        if (addPush)
         {
             StartCoroutine(DownSlowly());
         }
-    }
 
+    }
+    IEnumerator RaiseUp()
+    {
+        rd.AddForce(transform.up * 250f);
+        yield return new WaitForSeconds(stayInAir);
+        StartCoroutine(DownSlowly());
+        startLinear = false;
+    }
     IEnumerator DownSlowly()
     {
         rd.AddForce(transform.up * 180f);
