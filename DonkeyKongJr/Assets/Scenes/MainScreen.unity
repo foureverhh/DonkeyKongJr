@@ -1873,12 +1873,12 @@ Prefab:
     - target: {fileID: 50957218993285202, guid: 4c1e95cba3b18b244b946545f1f9084b,
         type: 2}
       propertyPath: m_Mass
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114132181582196820, guid: 4c1e95cba3b18b244b946545f1f9084b,
         type: 2}
       propertyPath: pushUp
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 50957218993285202, guid: 4c1e95cba3b18b244b946545f1f9084b,
         type: 2}

@@ -70,19 +70,14 @@ public class PlayerController : MonoBehaviour {
         if (touchCeiling)
         {
             //Get Transform of SecondFloor
-            Transform secondFloor = gameZone.transform.GetChild(1); //gameZone.GetComponentsInChildren<Transform>()[2];
+            Transform secondFloor = gameZone.transform.GetChild(1); 
             Debug.Log("Floor is: " + secondFloor.gameObject.name);
-            // Debug.Log("player Y is: " + transform.position.y);
-            // Debug.Log("second floor Y is: " + secondFloor.position.y);
             float offsetY = secondFloor.position.y - transform.position.y;
 
-            //Debug.Log("offsetY is: " + offsetY);
-
             Vector3 pos = transform.position;
-            pos.y = pos.y + offsetY - 1.5f;  // 
-            // Debug.Log("pos.y is:" + pos.y);
+            pos.y = pos.y + offsetY - 1.5f;   
             transform.position = pos;
-            // Debug.Log("player after jump Y is: " + transform.position.y);
+   
             addPush = true;
         }
         else if (transform.position.y < -1.3)
@@ -124,7 +119,7 @@ public class PlayerController : MonoBehaviour {
     }
     IEnumerator DownSlowly()
     {
-        rd.AddForce(transform.up * 50f);
+        rd.AddForce(transform.up * 100f);
         yield return new WaitForSeconds(stayInAir);
         addPush = false;
     }

@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour {
     private int currentPos = 0;
     [HideInInspector]
     public float moveIntervalControll;
+    private bool checkScore;
 
 	// Use this for initialization
 	void Start () {
@@ -35,7 +36,15 @@ public class EnemyController : MonoBehaviour {
             currentPos = 0;
         }
         transform.position = demonPos.GetChild(currentPos).position;
-        gameManager.CheckScore(transform);
+        //Debug.Log("Position: " + currentPos);
+        //gameManager.CheckScore(transform);
+        if (currentPos < 7 || currentPos > 10)
+        {
+            Debug.Log("It runs here inside");
+            gameManager.CheckScore(transform);
+            Debug.Log("Position: "+ currentPos);
+        }
+            
     }
 
     public void OnTriggerEnter2D(Collider2D Collider)
