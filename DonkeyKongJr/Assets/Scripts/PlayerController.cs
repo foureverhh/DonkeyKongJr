@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public float horizontalMoveAmount;
     public float veriticalMoveAmont;
     public float stayInAir;
+    public float pushUp;
 
     public bool withKey;
     private bool addPush ;
@@ -69,8 +70,8 @@ public class PlayerController : MonoBehaviour {
         if (touchCeiling)
         {
             //Get Transform of SecondFloor
-            Transform secondFloor = gameZone.GetComponentsInChildren<Transform>()[2];
-            //Debug.Log("Floor is: " + secondFloor.gameObject.name);
+            Transform secondFloor = gameZone.transform.GetChild(1); //gameZone.GetComponentsInChildren<Transform>()[2];
+            Debug.Log("Floor is: " + secondFloor.gameObject.name);
             // Debug.Log("player Y is: " + transform.position.y);
             // Debug.Log("second floor Y is: " + secondFloor.position.y);
             float offsetY = secondFloor.position.y - transform.position.y;
@@ -87,7 +88,6 @@ public class PlayerController : MonoBehaviour {
         else if (transform.position.y < -1.3)
         {
             startLinear = true;
-            Debug.Log("After click, StartLinear: " + startLinear + "addPush: " + addPush);
         }
     }
 
@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour {
         {
             StartCoroutine(RaiseUp());
         }
+
         if (addPush)
         {
             StartCoroutine(DownSlowly());
@@ -116,14 +117,14 @@ public class PlayerController : MonoBehaviour {
     }
     IEnumerator RaiseUp()
     {
-        rd.AddForce(transform.up * 250f);
-        yield return new WaitForSeconds(stayInAir);
-        StartCoroutine(DownSlowly());
+        rd.AddForce(transform.up * 300f);
+        yield return new WaitForSeconds(pushUp);
+        //StartCoroutine(DownSlowly());
         startLinear = false;
     }
     IEnumerator DownSlowly()
     {
-        rd.AddForce(transform.up * 180f);
+        rd.AddForce(transform.up * 50f);
         yield return new WaitForSeconds(stayInAir);
         addPush = false;
     }
